@@ -29,11 +29,11 @@ variable "vpc_tags" {
   type = map
   default = {}
 }
-# variable "aws_access_key_id" {
-#     type = string
-#     default = "AKIAXWMA6PV62Y4SZMOQ"
-# }
-# variable "aws_secret_access_key" {
-#     type = string
-#     default = "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"
-# }
+variable "aws_access_key_id" {
+    type = string
+    default = "AKIAXWMA6PV62Y4SZMOQ"
+}
+variable "aws_secret_access_key" {
+    type = string
+    default = "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"
+}
