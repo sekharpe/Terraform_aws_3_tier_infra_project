@@ -11,11 +11,13 @@ variable "enable_dns_hostnames" {
 }
 variable "project_name" {
   type = string
+  default = "AWS_3tier_infra_project"
   
 }
 
 variable "Environment" {
   type = string
+  default = "Dev"
 
 }
 variable "common_tags" {
