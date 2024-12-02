@@ -29,11 +29,13 @@ variable "vpc_tags" {
   type = map
   default = {}
 }
-variable "aws_access_key_id" {
-    type = string
-    default = "AKIAXWMA6PV62Y4SZMOQ"
-}
-variable "aws_secret_access_key" {
-    type = string
-    default = "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"
-}
+ variable "aws_access_key_id" {
+     description = "AWS Access key ID passed securely via environment variable"
+     type = string
+     sensitive = true
+ }
+ variable "aws_secret_access_key" {
+     description = "AWS secret Access key ID passed securely via environment variable"
+     type = string
+     sensitive = true
+ }
