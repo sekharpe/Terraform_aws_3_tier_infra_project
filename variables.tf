@@ -30,12 +30,13 @@ variable "vpc_tags" {
   default = {}
 }
  variable "aws_access_key_id" {
-     description = "AWS Access key ID passed securely via environment variable"
+     description = "AWS Access key ID passed securely via environment variav"
      type = string
      sensitive = true
  }
  variable "aws_secret_access_key" {
-     description = "AWS secret Access key ID passed securely via environment variable"
+     description = "AWS Access key ID passed securely via environment variav"
      type = string
      sensitive = true
  }
+
