@@ -50,9 +50,10 @@ on:
       action:
         description: 'Choose the Terraform action to perform (apply/destroy)'
         required: true
-        default: 'apply'
+        default: 'plan'
         type: choice
         options:
+          - plan
           - apply
           - destroy  
 
@@ -91,6 +92,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.action != 'destroy')
       env:
             TF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -103,7 +105,8 @@ jobs:
             TF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
-      if: ${{ github.event_name == 'push' || github.event.inputs.action == 'apply' }}
+      #if: ${{ github.event_name == 'push' || github.event.inputs.action == 'apply' }}
+      if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.action != 'destroy')
       #run: terraform apply -auto-approve -input=false
       run: terraform apply -auto-approve
       # Step 5: Terraform Destroy
@@ -111,5 +114,6 @@ jobs:
       env:
             TTF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      if: ${{ github.event_name == 'push' || github.event.inputs.action == 'destroy' }}
+      #if: ${{ github.event_name == 'push' || github.event.inputs.action == 'destroy' }}
+      if: github.event_name == 'workflow_dispatch' && inputs.action == 'destroy'
       run: terraform destroy -auto-approve
