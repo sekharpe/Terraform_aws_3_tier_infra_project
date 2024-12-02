@@ -110,10 +110,17 @@ jobs:
       #run: terraform apply -auto-approve -input=false
       run: terraform apply -auto-approve
       # Step 5: Terraform Destroy
-    - name: Terraform Destroy
+    - name: Terraform Refresh and Destroy Manual trigger only
       env:
             TTF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #if: ${{ github.event_name == 'push' || github.event.inputs.action == 'destroy' }}
       if: github.event_name == 'workflow_dispatch' && inputs.action == 'destroy'
-      run: terraform destroy -auto-approve
+      #run: terraform destroy -auto-approve
+      run: |
+        echo "Refreshing the Terraform state..."
+        terraform refresh #Refresh terraform state to sync with actual infrastructure
+
+        echo "Destroying the resources..."
+        terraform destroy -auto-approve  #destroy the resources
+      
