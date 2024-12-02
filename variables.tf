@@ -38,5 +38,6 @@ variable "vpc_tags" {
      description = "AWS Access key ID passed securely via environment variav"
      type = string
      sensitive = true
+     
  }
 
