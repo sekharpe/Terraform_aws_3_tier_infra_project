@@ -6,7 +6,7 @@ terraform {
     }
   }
   
-  backend "s3" { #configure the tfstate file in s3 bucket for using multiple users at ti,e for configuring changes
+  backend "s3" { #configure the tfstate file in s3 bucket  for using multiple users at ti,e for configuring changes
      bucket = "terraformaws3tierinfraproject"
      key    = "terraform/terraform.tfstate"
      region = "us-east-1"
