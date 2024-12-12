@@ -6,12 +6,12 @@ terraform {
     }
   }
   
-#   backend "s3" { #configure the tfstate file in s3 bucket for using multiple users at ti,e for configuring changes
-#      bucket = "pghub-state-dev"
-#      key    = "vpc-test"
-#      region = "us-east-1"
-#      dynamodb_table = "pghub-dev-locking"
-#   }
+  backend "s3" { #configure the tfstate file in s3 bucket for using multiple users at ti,e for configuring changes
+     bucket = "terraformaws3tierinfraproject"
+     key    = "terraform"
+     region = "us-east-1"
+     dynamodb_table = "terraformaws3tierinfraprojecttable"
+  }
 
 
 }
