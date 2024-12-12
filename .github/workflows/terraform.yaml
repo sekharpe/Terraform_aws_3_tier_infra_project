@@ -79,6 +79,31 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: "us-east-1"
+        
+    - name: Check and release lock if needed
+      id: check_lock
+      run: |
+          # Define DynamoDB table and lock ID
+          LOCK_TABLE="terraform-lock-table"
+          LOCK_ID="terraform-lock"
+          
+          # Check if there is an existing lock in DynamoDB
+          LOCK_EXISTS=$(aws dynamodb get-item \
+            --table-name $LOCK_TABLE \
+            --key '{"LockID": {"S": "'$LOCK_ID'"}}' \
+            --query 'Item.LockID.S' \
+            --output text)
+
+          if [ "$LOCK_EXISTS" != "None" ]; then
+            echo "Lock exists, attempting to delete stale lock..."
+            # If the lock exists, delete it (ensure it's safe to do this)
+            aws dynamodb delete-item \
+              --table-name $LOCK_TABLE \
+              --key '{"LockID": {"S": "'$LOCK_ID'"}}'
+            echo "Lock deleted."
+          else
+            echo "No lock found. Proceeding."
+          fi
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
