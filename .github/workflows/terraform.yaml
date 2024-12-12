@@ -85,7 +85,7 @@ jobs:
       run: |
           # Define DynamoDB table and lock ID
           LOCK_TABLE="terraformaws3tierinfraprojecttable"
-          LOCK_ID="terraform-lock"
+          LOCK_ID="80a844e8-dac9-f023-e79a-83c213761b42"
           
           # Check if there is an existing lock in DynamoDB
           LOCK_EXISTS=$(aws dynamodb get-item \
