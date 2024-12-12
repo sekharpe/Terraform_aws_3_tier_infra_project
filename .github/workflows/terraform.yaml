@@ -126,7 +126,7 @@ jobs:
     #   #run: terraform destroy -auto-approve
     #   run: |
     #     echo "Refreshing the Terraform state..."
-    #     terraform refresh #Refresh terraform state to sync with actual infrastructure
+    #     terraform refresh #Refresh terraform  state to sync with actual infrastructure
 
     #     echo "Destroying the resources..."
     #     terraform destroy -auto-approve  #destroy the resources
